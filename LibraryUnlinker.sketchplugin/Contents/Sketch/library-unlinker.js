@@ -1,5 +1,7 @@
 var UI = require('sketch/ui'),
-    DOM = require('sketch/dom');
+    DOM = require('sketch/dom'),
+    SymbolMaster = DOM.SymbolMaster,
+    Page = DOM.Page;
 
 function onRun(context) {
   var document = DOM.getSelectedDocument(),
@@ -31,7 +33,14 @@ function onRun(context) {
         selectedLibraryName = foreignLibraryNames[index];
 
     if (ok) {
-      count = unlinkLibrary(foreignSymbolList, selectedLibraryID);
+      let page = new Page({
+        name: 'Symbols from ' + selectedLibraryName,
+      });
+      page.parent = document;
+      context.document.pageTreeLayoutDidChange();
+
+      count = unlinkLibrary(page, foreignSymbolList, selectedLibraryID);
+
       if (count == 1) {
         UI.message('1 symbol was unlinked from ' + selectedLibraryName);
       } else {
@@ -47,12 +56,17 @@ function onRun(context) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function unlinkLibrary(foreignSymbolList, libraryID) {
+function unlinkLibrary(page, foreignSymbolList, libraryID) {
 
-  let symbols = foreignSymbolList.slice(0).filter(symbol => symbol.libraryID() == libraryID);
+  let symbols = foreignSymbolList.slice(0).filter(symbol => symbol.libraryID() == libraryID),
+      x = 0;
 
   symbols.forEach(symbol => {
     symbol.unlinkFromRemote();
+    let master = SymbolMaster.fromNative(symbol.symbolMaster());
+    master.parent = page;
+    master.frame = master.frame.offset(x, 0);
+    x = x + master.frame.width + 100;
   });
 
   return symbols.length;
