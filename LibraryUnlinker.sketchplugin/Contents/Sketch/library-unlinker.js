@@ -10,17 +10,15 @@ function onRun(context) {
 
   if (foreignSymbolList.length > 0) {
 
-    for (var i = 0; i < foreignSymbolList.length; i++){
-
-      var foreignSymbol = foreignSymbolList[i],
-          libraryName = String(foreignSymbol.sourceLibraryName()),
+    foreignSymbolList.forEach(foreignSymbol => {
+      let libraryName = String(foreignSymbol.sourceLibraryName()),
     	    libraryID = String(foreignSymbol.libraryID());
 
     	if (!foreignLibraryIDs.includes(libraryID)) {
         foreignLibraryIDs.push(libraryID);
-          foreignLibraryNames.push(libraryName);
+        foreignLibraryNames.push(libraryName);
       }
-    }
+    });
 
     var selection = UI.getSelectionFromUser(
       "Select a library to unlink:",
@@ -50,16 +48,12 @@ function onRun(context) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function unlinkLibrary(foreignSymbolList, libraryID) {
-  var count = 0,
-      symbols = foreignSymbolList.slice(0);
 
-  for (var i = 0; i < symbols.length; i++) {
-    var sourceLibraryID = symbols[i].libraryID();
-    if (sourceLibraryID == libraryID) {
-      symbols[i].unlinkFromRemote();
-      count++;
-    }
-  }
+  let symbols = foreignSymbolList.slice(0).filter(symbol => symbol.libraryID() == libraryID);
 
-  return count;
+  symbols.forEach(symbol => {
+    symbol.unlinkFromRemote();
+  });
+
+  return symbols.length;
 }
