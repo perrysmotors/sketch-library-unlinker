@@ -1,5 +1,7 @@
 var UI = require('sketch/ui'),
-    DOM = require('sketch/dom');
+    DOM = require('sketch/dom'),
+    SymbolMaster = DOM.SymbolMaster,
+    Page = DOM.Page;
 
 function onRun(context) {
   var document = DOM.getSelectedDocument(),
@@ -10,17 +12,15 @@ function onRun(context) {
 
   if (foreignSymbolList.length > 0) {
 
-    for (var i = 0; i < foreignSymbolList.length; i++){
-
-      var foreignSymbol = foreignSymbolList[i],
-          libraryName = String(foreignSymbol.sourceLibraryName()),
+    foreignSymbolList.forEach(foreignSymbol => {
+      let libraryName = String(foreignSymbol.sourceLibraryName()),
     	    libraryID = String(foreignSymbol.libraryID());
 
     	if (!foreignLibraryIDs.includes(libraryID)) {
         foreignLibraryIDs.push(libraryID);
-          foreignLibraryNames.push(libraryName);
+        foreignLibraryNames.push(libraryName);
       }
-    }
+    });
 
     var selection = UI.getSelectionFromUser(
       "Select a library to unlink:",
@@ -33,7 +33,14 @@ function onRun(context) {
         selectedLibraryName = foreignLibraryNames[index];
 
     if (ok) {
-      count = unlinkLibrary(foreignSymbolList, selectedLibraryID);
+      let page = new Page({
+        name: 'Symbols from ' + selectedLibraryName,
+      });
+      page.parent = document;
+      context.document.pageTreeLayoutDidChange();
+
+      count = unlinkLibrary(page, foreignSymbolList, selectedLibraryID);
+
       if (count == 1) {
         UI.message('1 symbol was unlinked from ' + selectedLibraryName);
       } else {
@@ -49,17 +56,18 @@ function onRun(context) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function unlinkLibrary(foreignSymbolList, libraryID) {
-  var count = 0,
-      symbols = foreignSymbolList.slice(0);
+function unlinkLibrary(page, foreignSymbolList, libraryID) {
 
-  for (var i = 0; i < symbols.length; i++) {
-    var sourceLibraryID = symbols[i].libraryID();
-    if (sourceLibraryID == libraryID) {
-      symbols[i].unlinkFromRemote();
-      count++;
-    }
-  }
+  let symbols = foreignSymbolList.slice(0).filter(symbol => symbol.libraryID() == libraryID),
+      x = 0;
 
-  return count;
+  symbols.forEach(symbol => {
+    symbol.unlinkFromRemote();
+    let master = SymbolMaster.fromNative(symbol.symbolMaster());
+    master.parent = page;
+    master.frame = master.frame.offset(x, 0);
+    x = x + master.frame.width + 100;
+  });
+
+  return symbols.length;
 }
