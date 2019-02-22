@@ -3,11 +3,18 @@
 
 A Sketch plugin that unlinks all symbols in a document that are linked to a specific library.
 
+_This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
+
 ## Features
 - Select a library to unlink all its symbols that are linked to the current document.
 
-## Install
-Download or clone the repository, and double click `LibraryUnlinker.sketchplugin`.
+## Installation
+
+_Requires Sketch 49+_
+
+* [Download](https://github.com/perrysmotors/sketch-library-unlinker/releases/latest) the latest release of the plugin
+* Un-zip
+* Double-click on `LibraryUnlinker.sketchplugin`
 
 or...
 
