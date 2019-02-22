@@ -3,7 +3,7 @@ var UI = require("sketch/ui"),
   SymbolMaster = DOM.SymbolMaster,
   Page = DOM.Page;
 
-export function onRun(context) {
+export default function() {
   var document = DOM.getSelectedDocument(),
     documentData = document.sketchObject.documentData(),
     foreignSymbolList = documentData.foreignSymbols(),
@@ -21,33 +21,37 @@ export function onRun(context) {
       }
     });
 
-    var selection = UI.getSelectionFromUser(
-      "Select a library to unlink:",
-      foreignLibraryNames
-    );
+    UI.getInputFromUser(
+      "Select a library to unlink?",
+      {
+        type: UI.INPUT_TYPE.selection,
+        possibleValues: foreignLibraryNames
+      },
+      (err, value) => {
+        if (err) {
+          // most likely the user canceled the input
+          return;
+        } else {
+          let index = foreignLibraryNames.findIndex(name => name === value);
+          let selectedLibraryID = foreignLibraryIDs[index];
 
-    var ok = selection[2],
-      index = selection[1],
-      selectedLibraryID = foreignLibraryIDs[index];
-    selectedLibraryName = foreignLibraryNames[index];
+          let page = new Page({
+            name: "Symbols from " + value
+          });
+          page.parent = document;
+          document.sketchObject.pageTreeLayoutDidChange();
 
-    if (ok) {
-      let page = new Page({
-        name: "Symbols from " + selectedLibraryName
-      });
-      page.parent = document;
-      context.document.pageTreeLayoutDidChange();
+          let count = unlinkLibrary(page, foreignSymbolList, selectedLibraryID);
 
-      count = unlinkLibrary(page, foreignSymbolList, selectedLibraryID);
-
-      if (count == 1) {
-        UI.message("1 symbol was unlinked from " + selectedLibraryName);
-      } else {
-        UI.message(
-          count + " symbols were unlinked from " + selectedLibraryName
-        );
+          if (count == 1) {
+            UI.message("1 symbol was unlinked from " + value);
+          } else {
+            UI.message(count + " symbols were unlinked from " + value);
+          }
+          return;
+        }
       }
-    }
+    );
   } else {
     UI.message("This file is not linked to any libraries");
   }

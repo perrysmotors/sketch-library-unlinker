@@ -5,15 +5,14 @@
   "commands": [
     {
       "name": "Unlink Library",
-      "identifier": "unlink",
-      "script": "./library-unlinker.js",
-      "handler": "onRun"
+      "identifier": "library-unlinker.unlink",
+      "script": "./library-unlinker.js"
     }
   ],
   "menu": {
     "title": "Library Unlinker",
     "items": [
-      "unlink"
+      "library-unlinker.unlink"
     ]
   }
 }
