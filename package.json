@@ -1,0 +1,33 @@
+{
+  "name": "sketch-library-unlinker",
+  "description": "Unlink all symbols in a document that are linked to a specific library",
+  "author": "Giles Perry <giles@gilesperry.info> (http://gilesperry.info/)",
+  "version": "2.0.0",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "Sketch Library Unlinker",
+    "manifest": "src/manifest.json",
+    "identifier": "com.gilesperry.sketch-library-unlinker",
+    "appcast": "https://api.sketchpacks.com/v1/plugins/com.gilesperry.sketch-library-unlinker/appcast",
+    "main": "LibraryUnlinker.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.5.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perrysmotors/sketch-library-unlinker.git"
+  },
+  "license": "MIT"
+}
