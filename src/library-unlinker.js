@@ -3,7 +3,7 @@ var UI = require("sketch/ui"),
   SymbolMaster = DOM.SymbolMaster,
   Page = DOM.Page;
 
-function onRun(context) {
+export function onRun(context) {
   var document = DOM.getSelectedDocument(),
     documentData = document.sketchObject.documentData(),
     foreignSymbolList = documentData.foreignSymbols(),
