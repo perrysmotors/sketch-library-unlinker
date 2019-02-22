@@ -10,7 +10,6 @@
     "name": "Sketch Library Unlinker",
     "manifest": "src/manifest.json",
     "identifier": "com.gilesperry.sketch-library-unlinker",
-    "appcast": "https://api.sketchpacks.com/v1/plugins/com.gilesperry.sketch-library-unlinker/appcast",
     "main": "LibraryUnlinker.sketchplugin",
     "assets": [
       "assets/**/*"
