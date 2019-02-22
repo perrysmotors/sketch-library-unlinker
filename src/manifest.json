@@ -13,7 +13,7 @@
   "menu": {
     "title": "Library Unlinker",
     "items": [
-      "rename-symbols"
+      "unlink"
     ]
   }
 }
