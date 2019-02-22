@@ -2,7 +2,7 @@
   "name": "sketch-library-unlinker",
   "description": "Unlink all symbols in a document that are linked to a specific library",
   "author": "Giles Perry <giles@gilesperry.info> (http://gilesperry.info/)",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "engines": {
     "sketch": ">=3.0"
   },
