@@ -1,7 +1,7 @@
 # Library Unlinker plugin for Sketch
 [![Download from Sketchpacks.com](https://badges.sketchpacks.com/plugins/com.gilesperry.sketch-library-unlinker/version.svg)](https://api.sketchpacks.com/v1/plugins/com.gilesperry.sketch-library-unlinker/download) [![Compatible Sketch Version](https://badges.sketchpacks.com/plugins/com.gilesperry.sketch-library-unlinker/compatibility.svg)](https://sketchpacks.com/perrysmotors/sketch-library-unlinker)
 
-A Sketch plugin that can unlink symbols linked to a specific library, or symbols that have been deleted in their libraries.
+A Sketch plugin that can unlink symbols linked to a specific library, or unlink symbols that have been deleted in their libraries.
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
