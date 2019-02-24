@@ -5,14 +5,21 @@
   "commands": [
     {
       "name": "Unlink Library",
-      "identifier": "library-unlinker.unlink",
+      "identifier": "library-unlinker.unlinkLibrary",
       "script": "./library-unlinker.js"
+    },
+    {
+      "name": "Unlink Symbols Missing From Libraries",
+      "identifier": "library-unlinker.unlinkMissingSymbols",
+      "script": "./library-unlinker.js",
+      "handler": "onUnlinkMissingSymbols"
     }
   ],
   "menu": {
     "title": "Library Unlinker",
     "items": [
-      "library-unlinker.unlink"
+      "library-unlinker.unlinkLibrary",
+      "library-unlinker.unlinkMissingSymbols"
     ]
   }
 }

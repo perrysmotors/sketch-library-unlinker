@@ -57,13 +57,61 @@ export default function() {
   }
 }
 
+export function onUnlinkMissingSymbols() {
+  var document = DOM.getSelectedDocument(),
+    documentData = document.sketchObject.documentData(),
+    foreignSymbolList = documentData.foreignSymbols();
+
+  let notFoundList = [];
+
+  if (foreignSymbolList.length > 0) {
+    foreignSymbolList.forEach(foreignSymbol => {
+      let assetLibraryController = AppController.sharedInstance().librariesController();
+      let libraryForSymbol = assetLibraryController.libraryForShareableObject(
+        foreignSymbol.symbolMaster()
+      );
+
+      let masterFromLibrary = foreignSymbol.masterFromLibrary(libraryForSymbol);
+
+      if (!masterFromLibrary) {
+        notFoundList.push(foreignSymbol);
+      }
+    });
+
+    if (notFoundList.length > 0) {
+      let page = new Page({
+        name: "Symbols missing from libraries"
+      });
+      page.parent = document;
+      document.sketchObject.pageTreeLayoutDidChange();
+
+      let count = unlinkSymbols(page, notFoundList);
+
+      if (count == 1) {
+        UI.message("1 symbol was unlinked");
+      } else {
+        UI.message(count + " symbols were unlinked");
+      }
+    } else {
+      UI.message("This document does not contain any symbols that are missing from their libraries");
+    }
+  } else {
+    UI.message("This file is not linked to any libraries");
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 function unlinkLibrary(page, foreignSymbolList, libraryID) {
   let symbols = foreignSymbolList
-      .slice(0)
-      .filter(symbol => symbol.libraryID() == libraryID),
-    x = 0;
+    .slice(0)
+    .filter(symbol => symbol.libraryID() == libraryID);
+
+  return unlinkSymbols(page, symbols);
+}
+
+function unlinkSymbols(page, symbols) {
+  let x = 0;
 
   symbols.forEach(symbol => {
     symbol.unlinkFromRemote();
