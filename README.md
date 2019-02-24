@@ -9,7 +9,7 @@ _This plugin was created using `skpm`. For a detailed explanation on how things 
 - Select a library to unlink all its symbols that are linked to the current document.
 - ***New in Version 3*** – Unlink any symbols that are missing from their libraries.
 
-If libray symbol is used in a document and later it is deleted from the library it remains in the document but cannot be updated. This plugin will unlink all such symbols adding their symbol masters to the document.
+If library symbol is used in a document and later it is deleted from the library it remains in the document but cannot be updated. This plugin will unlink all such symbols adding their symbol masters to the document.
 
 ## Installation
 
