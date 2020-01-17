@@ -36,10 +36,10 @@ export default function() {
           let selectedLibraryID = foreignLibraryIDs[index];
 
           let page = new Page({
-            name: "Symbols from " + value
+            name: "Symbols from " + value,
+            parent: document,
+            selected: true
           });
-          page.parent = document;
-          document.sketchObject.pageTreeLayoutDidChange();
 
           let count = unlinkLibrary(page, foreignSymbolList, selectedLibraryID);
 
@@ -80,10 +80,10 @@ export function onUnlinkMissingSymbols() {
 
     if (notFoundList.length > 0) {
       let page = new Page({
-        name: "Symbols missing from libraries"
+        name: "Symbols missing from libraries",
+        parent: document,
+        selected: true
       });
-      page.parent = document;
-      document.sketchObject.pageTreeLayoutDidChange();
 
       let count = unlinkSymbols(page, notFoundList);
 
