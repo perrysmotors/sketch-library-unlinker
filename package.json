@@ -2,7 +2,7 @@
   "name": "sketch-library-unlinker",
   "description": "Unlink symbols linked to a specific library, or unlink symbols that have been deleted in their libraries.",
   "author": "Giles Perry <giles@gilesperry.info> (http://gilesperry.info/)",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "engines": {
     "sketch": ">=3.0"
   },
