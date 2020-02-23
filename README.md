@@ -13,9 +13,7 @@ If library symbol is used in a document and later it is deleted from the library
 
 ## Installation
 
-_Requires Sketch 49+_
-
-* [Download](https://github.com/perrysmotors/sketch-library-unlinker/releases/latest) the latest release of the plugin
+* [Download](../../releases/latest/download/LibraryUnlinker.sketchplugin.zip) the latest release of the plugin
 * Un-zip
 * Double-click on `LibraryUnlinker.sketchplugin`
 
